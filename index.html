@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>workbreak</title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script>window.jQuery = window.$ = require('jquery');</script>
+    <script src="./node_modules/popper.js/dist/umd/popper.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Skranji" rel="stylesheet">
+</head>
+<body>
+	<div id="refresh">
+		<button type="button" class="btn btn-default">
+            Reload&nbsp; <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+	</div>
+	<div class="container">
+    <div class="alert alert-info">
+        <div class="alert-heading">
+            <h1>
+                <i class="fa fa-clock-o" aria-hidden="true"></i> workbreak <i class="fa fa-coffee" aria-hidden="true"></i>
+            </h1>
+        </div><hr>
+        <p>Work Time  : <span id="work-time-value"></span></p>
+        <p>Break Time : <span id="break-time-value"></span></p>
+    </div>
+		<div id="main-section" class="row">
+			<div class="col-md-12">
+				<button class="btn btn-primary btn-block" id="start">
+                  Start &nbsp;&nbsp; &nbsp; <i class="fa fa-play" aria-hidden="true"></i>
+                </button>
+			</div>
+			<div class="col-md-12">
+				<center>
+					<div id="timer-section" style="border: 0.5px solid black; width: 100%;"></div>
+				</center>
+			</div>
+			<div class="col-md-12" style="margin-top: 10px;">
+				<button class="btn btn-warning btn-block disabled" id="stop">
+                  Take a break &nbsp;&nbsp;&nbsp; <i class="fa fa-coffee" aria-hidden="true"></i>
+                </button>
+			</div>
+		</div>
+	</div>
+  
+    <div class="card" id="timer-setting">
+        <div class="card-body">
+            <h5 class="card-title">Set Custom Time</h5>
+            <p>
+                <input type="number" class="form-control" placeholder="Work time in minutes" id="work-time" min="20" step="1"
+                       onkeypress="return event.charCode >= 48 && event.charCode <= 57" title="Integers only" />
+                <input type="number" class="form-control" placeholder="Break time in minutes" id="break-time" min="1" step="1"
+                   onkeypress="return event.charCode >= 48 && event.charCode <= 57" title="Integers only"/>
+            </p>
+            <button tyoe="button" id="done-btn" class="btn btn-info btn-block btn-sm">Done</button>
+        </div>
+    </div>
+  
+    <button type="button" id="show-timer-btn" class="btn btn-info">
+        Settings <i class="fa fa-sliders" aria-hidden="true"></i>
+    </button>
+	<audio src="./public/audio/work.mp3" id="notify-start"></audio>
+	<audio src="./public/audio/break.mp3" id="notify-stop"></audio>
+
+</body>
+	<link rel="stylesheet" type="text/css" href="./public/css/style.css">
+	<script type="text/javascript" src="./public/js/20rule.js"></script>
+</html>

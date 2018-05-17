@@ -1,0 +1,33 @@
+html, body {
+    font-family: 'Skranji', cursive;
+}
+
+#timer-section {
+    font-size: 100px;
+}
+
+#timer-setting {
+    width: 300px;
+    position: fixed;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    bottom: 0;
+}
+
+#show-timer-btn {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+
+#refresh {
+    position: fixed;
+    bottom: 0;
+    margin-bottom: 5px;
+    margin-left: 115px;
+}
+
+#refresh:hover {
+    cursor: pointer;
+}
