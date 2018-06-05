@@ -1,7 +1,7 @@
-// variables
+// app variables
 let workInterval, workTime, breakTime, breakInterval, tempWorkTime, tempBreakTime;
 
-// ui elements
+// app ui elements
 let startBtn = document.getElementById('start');
 let stopBtn = document.getElementById('stop');
 let resetBtn = document.getElementById('reset');
@@ -50,6 +50,7 @@ function startTimer() {
 	$("#break-alert-section").hide();
 	$("#work-alert-section").show();
 
+	timerSection.innerHTML = "";
 	notify("*** WORK TIME ***", tablet, 'notify-start', "Wort time is " + (workTime / 60) + " minutes");
 
 	clearInterval(workInterval);
@@ -70,6 +71,7 @@ function updateWorkTime() {
 
 function updateBreakTime() {
 	if (tempBreakTime <= 0) {
+		win.close();
 		startTimer();
 	} else {
 		tempBreakTime -= 1;
@@ -90,6 +92,7 @@ function displayTime(currentTime) {
 
 function stopTimer() {
 	clearInterval(workInterval);
+	clearInterval(breakInterval);
 
 	$("#break-alert-section").show();
 	$("#work-alert-section").hide();
@@ -101,15 +104,12 @@ function stopTimer() {
 	$("#reset").removeClass("disabled");
 
 	timerSection.innerHTML = "";
-	clearInterval(workInterval);
-	clearInterval(breakInterval);
 	tempBreakTime = breakTime;
 	breakInterval = setTimeout(updateBreakTime, 1000);
 }
 
 function resetTimer() {
 	clearInterval(workInterval);
-	clearInterval(breakInterval);
 	$("#start").show();
 
 	$("#stop").hide();
@@ -164,9 +164,9 @@ function notify(theBody, theIcon, theAudio, theTitle) {
 function storeNewTimer() {
 	let inputWorkTime = Number($("#work-time").val());
 	let inputBreakTime = Number($("#break-time").val());
-	if (inputWorkTime >= 20 && inputBreakTime >= 1) {
-		setTimers(inputWorkTime, inputBreakTime);
-	}
+	// if (inputWorkTime >= 20 && inputBreakTime >= 1) {
+	setTimers(inputWorkTime, inputBreakTime);
+	// }
 }
 
 let refresh = document.getElementById('refresh');

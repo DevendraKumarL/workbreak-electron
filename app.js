@@ -1,9 +1,9 @@
 const { app, BrowserWindow } = require("electron")
-	const path = require("path")
-	const url = require("url")
+const path = require("path")
+const url = require("url")
 
 function createAppWindow() {
-	let win = new BrowserWindow({width: 1296, height: 800})
+	let win = new BrowserWindow({ width: 1296, height: 800 })
 
 	win.loadURL(url.format({
 		pathname: path.join(__dirname, "index.html"),
@@ -13,7 +13,10 @@ function createAppWindow() {
 
 	win.on("closed", () => {
 		win = null
+		app.quit()
 	})
+
+	win.show()
 }
 
 app.on("ready", createAppWindow)

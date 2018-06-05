@@ -8,7 +8,7 @@
 	<script src="./node_modules/popper.js/dist/umd/popper.js"></script>
 	<script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-	<link href="https://fonts.googleapis.com/css?family=Skranji" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Skranji|Quattrocento+Sans|Roboto|IBM+Plex+Sans:700" rel="stylesheet">
 </head>
 
 <body>
@@ -75,10 +75,12 @@
 	</div>
 
 	<button type="button" id="timer-settings-btn" class="btn btn-light" data-toggle="modal" data-target="#timer-settings-modal">
-		Settings&nbsp;<i class="fa fa-sliders" aria-hidden="true"></i>
+		Settings&nbsp;
+		<i class="fa fa-sliders" aria-hidden="true"></i>
 	</button>
 	<button type="button" class="btn btn-light" id="refresh">
-		Reload&nbsp;<i class="fa fa-refresh" aria-hidden="true"></i>
+		Reload&nbsp;
+		<i class="fa fa-refresh" aria-hidden="true"></i>
 	</button>
 	<audio src="./public/audio/work.mp3" id="notify-start"></audio>
 	<audio src="./public/audio/break.mp3" id="notify-stop"></audio>
@@ -105,7 +107,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="done-btn" data-dismiss="modal">Save</button>
-					<button type="button" class="btn btn-success" id="restart-btn" data-dismiss="modal">Save & Restart</button>
+					<button type="button" class="btn btn-success" id="restart-btn" data-dismiss="modal">Save & Start Timer</button>
 					<button type="button" class="btn btn-secondary" id="cancel-btn" data-dismiss="modal">Cancel</button>
 				</div>
 			</div>
