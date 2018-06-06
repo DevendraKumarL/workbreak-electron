@@ -56,6 +56,15 @@
 			</div>
 			<br>
 			<br>
+			<div class="col-md-12">
+				<button class="btn btn-info disabled" id="restart">
+					<i class="fa fa-play" aria-hidden="true"></i>
+					&nbsp;Restart&nbsp;
+					<i class="fa fa-play" aria-hidden="true"></i>
+				</button>
+			</div>
+			<br>
+			<br>
 			<div class="col-md-12" id="break-alert-section">
 				<div class="alert alert-primary text-center">
 					<h4>TAKE A BREAK!</h4>
@@ -100,7 +109,7 @@
 				<div class="modal-body">
 					<label>WorkTime: </label>
 					<input type="number" class="form-control" placeholder="Work time in minutes" id="work-time" min="20" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-					 title="Integers only" />
+					 title="Integers only" autofocus />
 					<label>BreakTime: </label>
 					<input type="number" class="form-control" placeholder="Break time in minutes" id="break-time" min="1" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
 					 title="Integers only" />

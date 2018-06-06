@@ -5,18 +5,26 @@ let workInterval, workTime, breakTime, breakInterval, tempWorkTime, tempBreakTim
 let startBtn = document.getElementById('start');
 let stopBtn = document.getElementById('stop');
 let resetBtn = document.getElementById('reset');
+let restartTimerBtn = document.getElementById('restart');
 let timerSection = document.getElementById('timer-section');
 
 startBtn.addEventListener('click', startTimer);
 stopBtn.addEventListener('click', stopTimer);
 resetBtn.addEventListener('click', resetTimer);
+restartTimerBtn.addEventListener('click', restartTimer);
 
-$("#start").show();
-$("#stop").hide();
-$("#reset").hide();
-$("#timer-section").hide();
-$("#break-alert-section").hide();
-$("#work-alert-section").hide();
+
+init(); // start app with ui elements show/hide
+
+function init() {
+	$("#start").show();
+	$("#stop").hide();
+	$("#reset").hide();
+	$("#restart").hide();
+	$("#timer-section").hide();
+	$("#break-alert-section").hide();
+	$("#work-alert-section").hide();
+}
 
 let tablet = "https://cdn.glitch.com/5a0fb168-a5f7-4148-9191-0155af7c10a7%2Ftablet.png?1514007428984";
 let television = "https://cdn.glitch.com/5a0fb168-a5f7-4148-9191-0155af7c10a7%2Ftelevision.png?1514007428930";
@@ -46,6 +54,9 @@ function startTimer() {
 	$("#reset").show();
 	$("#reset").removeClass("disabled");
 
+	$("#restart").show();
+	$("#restart").removeClass("disabled");
+
 	$("#timer-section").show();
 	$("#break-alert-section").hide();
 	$("#work-alert-section").show();
@@ -71,7 +82,6 @@ function updateWorkTime() {
 
 function updateBreakTime() {
 	if (tempBreakTime <= 0) {
-		win.close();
 		startTimer();
 	} else {
 		tempBreakTime -= 1;
@@ -102,6 +112,8 @@ function stopTimer() {
 	$("#stop").addClass("disabled");
 	$("#reset").show();
 	$("#reset").removeClass("disabled");
+	$("#restart").show();
+	$("#restart").removeClass("disabled");
 
 	timerSection.innerHTML = "";
 	tempBreakTime = breakTime;
@@ -110,18 +122,24 @@ function stopTimer() {
 
 function resetTimer() {
 	clearInterval(workInterval);
-	$("#start").show();
+	timerSection.innerHTML = "";
 
+	$("#start").show();
 	$("#stop").hide();
 	$("#stop").addClass("disabled");
-
 	$("#reset").hide();
 	$("#reset").addClass("disabled");
+	$("#restart").hide();
+	$("#restart").addClass("disabled");
 
-	timerSection.innerHTML = "";
 	$("#timer-section").hide();
 	$("#break-alert-section").hide();
 	$("#work-alert-section").hide();
+}
+
+function restartTimer() {
+	resetTimer();
+	setTimeout(startTimer, 500);
 }
 
 document.addEventListener('DOMContentLoaded', requestNotificationPermission);
@@ -164,9 +182,9 @@ function notify(theBody, theIcon, theAudio, theTitle) {
 function storeNewTimer() {
 	let inputWorkTime = Number($("#work-time").val());
 	let inputBreakTime = Number($("#break-time").val());
-	// if (inputWorkTime >= 20 && inputBreakTime >= 1) {
-	setTimers(inputWorkTime, inputBreakTime);
-	// }
+	if (inputWorkTime >= 20 && inputBreakTime >= 1) {
+		setTimers(inputWorkTime, inputBreakTime);
+	}
 }
 
 let refresh = document.getElementById('refresh');
@@ -175,11 +193,6 @@ refresh.addEventListener('click', function () {
 });
 
 $("#timer-setting").hide();
-
-let timerBtn = document.getElementById('timer-settings-btn');
-timerBtn.addEventListener('click', function () {
-	document.getElementById("work-time").focus(true);
-});
 
 let doneBtn = document.getElementById('done-btn');
 doneBtn.addEventListener('click', function () {
