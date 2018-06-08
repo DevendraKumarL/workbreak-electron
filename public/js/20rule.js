@@ -122,6 +122,7 @@ function stopTimer() {
 
 function resetTimer() {
 	clearInterval(workInterval);
+	clearInterval(breakInterval);
 	timerSection.innerHTML = "";
 
 	$("#start").show();
