@@ -31,6 +31,23 @@
 			</h6>
 		</div>
 		<div id="main-section" class="row">
+			<div class="col-md-12" id="break-alert-section">
+				<div class="alert alert-primary text-center">
+					<h4>TAKE A BREAK!</h4>
+				</div>
+			</div>
+			<div class="col-md-12" id="work-alert-section">
+				<div class="alert alert-success text-center">
+					<h4>KEEP ON WORKING!</h4>
+				</div>
+			</div>
+			<div class="col-md-12">
+				<center>
+					<div id="timer-section"></div>
+				</center>
+				<br>
+			</div>
+			<br>
 			<div class="col-md-12">
 				<button class="btn btn-sm btn-primary" id="start">
 					<i class="fa fa-play" aria-hidden="true"></i>
@@ -63,23 +80,6 @@
 					<i class="fa fa-play" aria-hidden="true"></i>
 				</button>
 			</div>
-			<br>
-			<br>
-			<div class="col-md-12" id="break-alert-section">
-				<div class="alert alert-primary text-center">
-					<h4>TAKE A BREAK!</h4>
-				</div>
-			</div>
-			<div class="col-md-12" id="work-alert-section">
-				<div class="alert alert-success text-center">
-					<h4>KEEP ON WORKING!</h4>
-				</div>
-			</div>
-			<div class="col-md-12">
-				<center>
-					<div id="timer-section"></div>
-				</center>
-			</div>
 		</div>
 	</div>
 
@@ -93,6 +93,7 @@
 	</button>
 	<audio src="./public/audio/work.mp3" id="notify-start"></audio>
 	<audio src="./public/audio/break.mp3" id="notify-stop"></audio>
+	<audio src="./public/audio/WindowsNotifySystemGeneric.wav" id="notify-tone"></audio>
 
 	<!-- Modal -->
 	<div class="modal fade" id="timer-settings-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

@@ -167,7 +167,8 @@ function notify(theBody, theIcon, theAudio, theTitle) {
 
 	else if (Notification.permission === "granted") {
 		var notification = new Notification(theTitle, options);
-		document.getElementById(theAudio).play();
+		document.getElementById("notify-tone").play();
+		// document.getElementById(theAudio).play();
 	}
 
 	else if (Notification.permission !== "granted") {
