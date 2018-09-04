@@ -1,3 +1,5 @@
+const remote = require('electron').remote;
+
 // app variables
 let workInterval, workTime, breakTime, breakInterval, tempWorkTime, tempBreakTime;
 
@@ -22,8 +24,6 @@ function init() {
 	$("#reset").hide();
 	$("#restart").hide();
 	$("#timer-section").hide();
-	$("#break-alert-section").hide();
-	$("#work-alert-section").hide();
 }
 
 let tablet = "https://cdn.glitch.com/5a0fb168-a5f7-4148-9191-0155af7c10a7%2Ftablet.png?1514007428984";
@@ -41,8 +41,7 @@ function setTimers(ttime, btime) {
 	breakTime = btime * 60; // in seconds
 	console.log("WorkTimer: ", workTime, " BreakTime: ", breakTime);
 	// breakTime = btime * 1000 * 60; // in miliseconds
-	$("#work-time-value").html(ttime + " minutes");
-	$("#break-time-value").html(btime + " minute(s)");
+	$("#wb-time-value").text(ttime + " : " + btime);
 }
 
 function startTimer() {
@@ -57,23 +56,25 @@ function startTimer() {
 	$("#restart").show();
 	$("#restart").removeClass("disabled");
 
-	$("#timer-section").show();
-	$("#break-alert-section").hide();
-	$("#work-alert-section").show();
+	$("#timer-section").css('border', '2px solid teal');
 
 	timerSection.innerHTML = "";
-	notify("*** WORK TIME ***", tablet, 'notify-start', "Wort time is " + (workTime / 60) + " minutes");
+	notify("WORK TIME", tablet, 'notify-start', "Wort time is " + (workTime / 60) + " minutes");
 
 	clearInterval(workInterval);
 	clearInterval(breakInterval);
 	tempWorkTime = workTime;
 	workInterval = setTimeout(updateWorkTime, 1000);
+	setTimeout(() => {
+		$("#timer-section").show();
+	}, 990);
 }
 
 function updateWorkTime() {
 	if (tempWorkTime <= 0) {
 		stopTimer();
 	} else {
+		$("#timer-section").show();
 		tempWorkTime -= 1;
 		displayTime(tempWorkTime);
 		workInterval = setTimeout(updateWorkTime, 1000);
@@ -104,9 +105,7 @@ function stopTimer() {
 	clearInterval(workInterval);
 	clearInterval(breakInterval);
 
-	$("#break-alert-section").show();
-	$("#work-alert-section").hide();
-	notify("*** BREAK TIME ***", television, 'notify-stop', "Relax and go away from computer screen for " + (breakTime / 60) + " minutes");
+	notify("BREAK TIME", television, 'notify-stop', "Relax and go away from computer screen for " + (breakTime / 60) + " minutes");
 
 	$("#stop").hide();
 	$("#stop").addClass("disabled");
@@ -114,6 +113,8 @@ function stopTimer() {
 	$("#reset").removeClass("disabled");
 	$("#restart").show();
 	$("#restart").removeClass("disabled");
+
+	$("#timer-section").css('border', '2px solid yellow');
 
 	timerSection.innerHTML = "";
 	tempBreakTime = breakTime;
@@ -134,8 +135,6 @@ function resetTimer() {
 	$("#restart").addClass("disabled");
 
 	$("#timer-section").hide();
-	$("#break-alert-section").hide();
-	$("#work-alert-section").hide();
 }
 
 function restartTimer() {
@@ -156,7 +155,7 @@ function requestNotificationPermission() {
 }
 
 function notify(theBody, theIcon, theAudio, theTitle) {
-	var options = {
+	let options = {
 		body: theBody,
 		icon: theIcon,
 	};
@@ -166,16 +165,21 @@ function notify(theBody, theIcon, theAudio, theTitle) {
 	}
 
 	else if (Notification.permission === "granted") {
-		var notification = new Notification(theTitle, options);
+		let notification = new Notification(theTitle, options);
 		document.getElementById("notify-tone").play();
-		// document.getElementById(theAudio).play();
+		const win = remote.getCurrentWindow()
+		win.focus();
+		win.focus();
 	}
 
 	else if (Notification.permission !== "granted") {
 		Notification.requestPermission(function (permission) {
 			if (permission === "granted") {
-				var notification = new Notification(theTitle, options);
-				document.getElementById(theAudio).play();
+				let notification = new Notification(theTitle, options);
+				document.getElementById("notify-tone").play();
+				const win = remote.getCurrentWindow()
+				win.focus();
+				win.focus();
 			}
 		});
 	}
