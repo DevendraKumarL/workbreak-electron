@@ -64,8 +64,6 @@
 		Reload&nbsp;
 		<i class="fa fa-refresh" aria-hidden="true"></i>
 	</button>
-	<audio src="./public/audio/work.mp3" id="notify-start"></audio>
-	<audio src="./public/audio/break.mp3" id="notify-stop"></audio>
 	<audio src="./public/audio/WindowsNotifySystemGeneric.wav" id="notify-tone"></audio>
 
 	<!-- Modal -->
@@ -81,12 +79,13 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<label>WorkTime: </label>
-					<input type="number" class="form-control" placeholder="Work time in minutes" id="work-time" min="20" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-					 title="Integers only" autofocus />
-					<label>BreakTime: </label>
-					<input type="number" class="form-control" placeholder="Break time in minutes" id="break-time" min="1" step="1" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
-					 title="Integers only" />
+					<label>WorkTime</label>
+					<input type="number" class="form-control" placeholder="Work time in minutes" id="work-time" min="1" />
+					<small class="text-muted">Minimum WorkTime is 1 minute</small>
+					<br>
+					<label>BreakTime</label>
+					<input type="number" class="form-control" placeholder="Break time in minutes" id="break-time" min="1" />
+					<small class="text-muted">Minimum BreakTime is 1 minute</small>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-outline-primary btn-sm" id="done-btn" data-dismiss="modal">Save</button>

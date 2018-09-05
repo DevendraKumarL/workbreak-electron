@@ -1,7 +1,11 @@
 const remote = require('electron').remote;
+const storage = require("electron-json-storage");
+
+const defaultDataPath = storage.getDefaultDataPath();
 
 // app variables
-let workInterval, workTime, breakTime, breakInterval, tempWorkTime, tempBreakTime;
+let workInterval, breakInterval;
+let workTime, breakTime, tempWorkTime, tempBreakTime;
 
 // app ui elements
 let startBtn = document.getElementById('start');
@@ -10,11 +14,15 @@ let resetBtn = document.getElementById('reset');
 let restartTimerBtn = document.getElementById('restart');
 let timerSection = document.getElementById('timer-section');
 
+let tablet = "./public/images/laptop.png";
+let television = "./public/images/coffee.png";
+
 startBtn.addEventListener('click', startTimer);
 stopBtn.addEventListener('click', stopTimer);
 resetBtn.addEventListener('click', resetTimer);
 restartTimerBtn.addEventListener('click', restartTimer);
 
+let defaultWtime = 20, defaultBTime = 1;
 
 init(); // start app with ui elements show/hide
 
@@ -24,24 +32,67 @@ function init() {
 	$("#reset").hide();
 	$("#restart").hide();
 	$("#timer-section").hide();
+
+	console.log("defaultDataPath => ", defaultDataPath);
+
+	let wtime, btime;
+	storage.getMany(['wtime', 'btime'], (error, data) => {
+		if (error) {
+			console.log("error! could not load wtime & btime : ", error);
+			return;
+		}
+		wtime = data.wtime.time;
+		btime = data.btime.time;
+		console.log("wtime : ", wtime);
+		console.log("btime : ", btime);
+		setTimers(wtime, btime, false);
+	});
 }
 
-let tablet = "https://cdn.glitch.com/5a0fb168-a5f7-4148-9191-0155af7c10a7%2Ftablet.png?1514007428984";
-let television = "https://cdn.glitch.com/5a0fb168-a5f7-4148-9191-0155af7c10a7%2Ftelevision.png?1514007428930";
-
-setTimers(20, 1); // params in minutes
-
-function setTimers(ttime, btime) {
-	if (ttime === (workTime / 60) && btime === (breakTime / 60)) {
-		console.log("No change in time settings");
+function setTimers(wtime, btime, startTimerClock) {
+	if (wtime === (workTime / 60) && btime === (breakTime / 60)) {
+		return console.log("No change in timer settings");
 	}
-	$("#work-time").val(ttime);
+
+	let condition = wtime === undefined || btime === undefined;
+
+	storeTimesInStorage(condition ? defaultWtime : wtime, condition ? defaultBTime : btime).then((times) => {
+		console.log("times : ", times);
+		updateTimers(times.wtime, times.btime, startTimerClock);
+	}, (rejected) => {
+		console.log("Something went wrong. Please try again later. rejected : ", rejected);
+	});
+}
+
+function updateTimers(wtime, btime, startTimerClock) {
+	$("#work-time").val(wtime);
 	$("#break-time").val(btime);
-	workTime = ttime * 60; // in seconds
+	$("#wb-time-value").text(wtime + " : " + btime);
+	workTime = wtime * 60; // in seconds
 	breakTime = btime * 60; // in seconds
-	console.log("WorkTimer: ", workTime, " BreakTime: ", breakTime);
-	// breakTime = btime * 1000 * 60; // in miliseconds
-	$("#wb-time-value").text(ttime + " : " + btime);
+	if (startTimerClock) {
+		startTimer();
+	}
+}
+
+function storeTimesInStorage(wtime, btime) {
+	storage.set('wtime', { time: wtime }, (error) => {
+		if (error) {
+			console.log("error! could not save default Wtime : ", error);
+			return;
+		}
+		console.log("%%% stored Wtime %%%");
+		storage.set('btime', { time: btime }, (error) => {
+			if (error) {
+				console.log("error! could not save default Btime : ", error);
+				return;
+			}
+			console.log("%%% stored Btime %%%");
+		});
+	});
+	return new Promise((resolve, reject) => {
+		resolve({ wtime: wtime, btime: btime });
+	});
 }
 
 function startTimer() {
@@ -59,7 +110,7 @@ function startTimer() {
 	$("#timer-section").css('border', '2px solid teal');
 
 	timerSection.innerHTML = "";
-	notify("WORK TIME", tablet, 'notify-start', "Wort time is " + (workTime / 60) + " minutes");
+	notify("WORK TIME", tablet, 'notify-start', (workTime / 60) + " minutes");
 
 	clearInterval(workInterval);
 	clearInterval(breakInterval);
@@ -105,7 +156,7 @@ function stopTimer() {
 	clearInterval(workInterval);
 	clearInterval(breakInterval);
 
-	notify("BREAK TIME", television, 'notify-stop', "Relax and go away from computer screen for " + (breakTime / 60) + " minutes");
+	notify("BREAK TIME", television, 'notify-stop', (breakTime / 60) + " minutes");
 
 	$("#stop").hide();
 	$("#stop").addClass("disabled");
@@ -185,11 +236,11 @@ function notify(theBody, theIcon, theAudio, theTitle) {
 	}
 }
 
-function storeNewTimer() {
+function storeNewTimer(startTimerClock) {
 	let inputWorkTime = Number($("#work-time").val());
 	let inputBreakTime = Number($("#break-time").val());
-	if (inputWorkTime >= 20 && inputBreakTime >= 1) {
-		setTimers(inputWorkTime, inputBreakTime);
+	if (inputWorkTime >= 1 && inputBreakTime >= 1) {
+		setTimers(inputWorkTime, inputBreakTime, startTimerClock);
 	}
 }
 
@@ -202,11 +253,10 @@ $("#timer-setting").hide();
 
 let doneBtn = document.getElementById('done-btn');
 doneBtn.addEventListener('click', function () {
-	storeNewTimer();
+	storeNewTimer(false);
 });
 
 let restartBtn = document.getElementById('restart-btn');
 restartBtn.addEventListener('click', function () {
-	storeNewTimer();
-	startTimer();
+	storeNewTimer(true);
 });
