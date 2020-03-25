@@ -1,6 +1,14 @@
 html, body {
-	/* font-family: 'IBM Plex Sans', sans-serif; */
-	font-family: 'Skranji', cursive;
+	background-color: black;
+	color: white;
+	/* font-family: 'VT323', monospace; */
+	font-family: 'Faster One', cursive;
+}
+
+.title-style {
+	width: 64px;
+	height: 64px;
+	color: white;
 }
 
 .timer-sec {
@@ -16,40 +24,31 @@ html, body {
 #timer-section {
 	font-size: 75px;
 	line-height: 300px;
-	border-radius: 50%;
-	width: 300px;
+	width: 350px;
 	height: 300px;
 }
 
 #timer-values {
 	font-size: 40px;
 	line-height: 150px;
-	border-radius: 50%;
-	width: 150px;
+	width: 160px;
 	height: 150px;
-	border: 1.5px solid rgb(96, 125, 139);
+	border: 1.5px solid white;
 }
 
 #timer-settings-btn {
-	/* position: fixed; */
 	bottom: 0;
 	margin-bottom: 5px;
-	/* margin-left: 5px; */
 }
 
 #refresh {
-	/* position: fixed; */
 	bottom: 0;
 	margin-bottom: 5px;
-	/* margin-left: 119px; */
-}
-
-.button-group-spc {
-	margin-right: 5px;
 }
 
 .card {
-	background: rgb(250, 250, 250);
+	background: black;
+	color: white;
 	border-radius: 2px;
 }
 
@@ -60,4 +59,12 @@ html, body {
 
 .btn {
 	font-size: 20px;
+}
+
+.btn-margin {
+	margin-right: 5px;
+}
+
+.modal-footer {
+	border-top: none !important;
 }

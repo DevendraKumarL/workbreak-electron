@@ -107,7 +107,7 @@ function startTimer() {
 	$("#restart").show();
 	$("#restart").removeClass("disabled");
 
-	$("#timer-section").css('border', '2px solid teal');
+	$("#timer-section").css('border', '2px solid white');
 
 	timerSection.innerHTML = "";
 	notify("WORK TIME", tablet, 'notify-start', (workTime / 60) + " minutes");
@@ -249,7 +249,7 @@ refresh.addEventListener('click', function () {
 	location.reload();
 });
 
-$("#timer-setting").hide();
+$("#timer-settings-modal").hide();
 
 let doneBtn = document.getElementById('done-btn');
 doneBtn.addEventListener('click', function () {
